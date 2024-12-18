@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Urls      Urls[]
+
+  @@index([username], name: "username")
+  @@map("users")
+}
+
+model Urls {
+  uuid      String      @id @default(uuid())
+  url       String
+  shortUrl  String      @unique @map("short_url")
+  userUuid  String      @map("user_uuid")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  user      Users       @relation(fields: [userUuid], references: [id])
+  UrlVisits UrlVisits[]
+
+  @@index([userUuid], name: "user_id")
+  @@index([shortUrl], name: "short_url")
+  @@map("urls")
+}
+
+model UrlVisits {
+  id         String   @id @default(uuid())
+  urlUuid    String   @map("url_uuid")
+  accessedAt DateTime @default(now()) @map("accessed_at")
+  userIp     String   @map("user_ip")
+  location   String
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  url        Urls     @relation(fields: [urlUuid], references: [uuid])
+
+  @@index([urlUuid], name: "url_id")
+  @@map("url_visits")
+}
