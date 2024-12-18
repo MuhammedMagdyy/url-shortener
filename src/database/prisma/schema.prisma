@@ -7,43 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
+model User {
   id        String   @id @default(uuid())
   username  String   @unique
   password  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  Urls      Urls[]
+
+  Urls Url[]
 
   @@index([username], name: "username")
   @@map("users")
 }
 
-model Urls {
-  uuid      String      @id @default(uuid())
+model Url {
+  uuid      String   @id @default(uuid())
   url       String
-  shortUrl  String      @unique @map("short_url")
-  userUuid  String      @map("user_uuid")
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  user      Users       @relation(fields: [userUuid], references: [id])
-  UrlVisits UrlVisits[]
+  shortUrl  String   @unique @map("short_url")
+  userUuid  String   @map("user_uuid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  Visit Visit[]
+  user  User    @relation(fields: [userUuid], references: [id])
 
   @@index([userUuid], name: "user_id")
   @@index([shortUrl], name: "short_url")
   @@map("urls")
 }
 
-model UrlVisits {
+model Visit {
   id         String   @id @default(uuid())
   urlUuid    String   @map("url_uuid")
   accessedAt DateTime @default(now()) @map("accessed_at")
   userIp     String   @map("user_ip")
-  location   String
+  location   String?
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
-  url        Urls     @relation(fields: [urlUuid], references: [uuid])
+
+  url Url @relation(fields: [urlUuid], references: [uuid])
 
   @@index([urlUuid], name: "url_id")
-  @@map("url_visits")
+  @@map("visits")
 }
