@@ -8,7 +8,11 @@
     "start": "node dist/index.js",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prisma:migrate": "prisma migrate dev --schema=src/database/prisma/schema.prisma",
+    "prisma:generate": "prisma generate --schema=src/database/prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=src/database/prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=src/database/prisma/schema.prisma"
   },
   "keywords": [
     "typescript",
@@ -19,6 +23,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
@@ -26,6 +31,8 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "nanoid": "^5.0.9",
+    "uuid": "^11.0.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -41,6 +48,7 @@
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.4.1",
+    "prisma": "^6.1.0",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.2"
   }
