@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  uuid      String   @id @default(uuid())
   username  String   @unique
   password  String
   createdAt DateTime @default(now()) @map("created_at")
@@ -29,7 +29,7 @@ model Url {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   Visit Visit[]
-  user  User    @relation(fields: [userUuid], references: [id])
+  user  User    @relation(fields: [userUuid], references: [uuid])
 
   @@index([userUuid], name: "user_id")
   @@index([shortUrl], name: "short_url")
@@ -37,7 +37,7 @@ model Url {
 }
 
 model Visit {
-  id         String   @id @default(uuid())
+  uuid       String   @id @default(uuid())
   urlUuid    String   @map("url_uuid")
   accessedAt DateTime @default(now()) @map("accessed_at")
   userIp     String   @map("user_ip")
