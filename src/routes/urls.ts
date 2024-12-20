@@ -4,8 +4,7 @@ import { isAuth } from '../middlewares';
 
 const router = Router();
 
-router.use(isAuth);
-router.post('/', urls.shortenUrl);
+router.post('/', isAuth, urls.shortenUrl);
 router.get('/:code', urls.redirectUrl);
 
 export { router as urlRouter };
