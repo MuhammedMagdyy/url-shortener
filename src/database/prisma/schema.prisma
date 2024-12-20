@@ -41,7 +41,7 @@ model Visit {
   urlUuid    String   @map("url_uuid")
   accessedAt DateTime @default(now()) @map("accessed_at")
   userIp     String   @map("user_ip")
-  location   String?
+  location   Json?
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
