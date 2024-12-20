@@ -1,9 +1,10 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { ApiError } from '../utils';
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../shared';
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from '../shared';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
-type ErrorType = ApiError | ZodError;
+type ErrorType = ApiError | ZodError | JsonWebTokenError | Error;
 
 export const errorHandler: ErrorRequestHandler = (
   error: ErrorType,
@@ -21,7 +22,23 @@ export const errorHandler: ErrorRequestHandler = (
       };
     });
     res.status(BAD_REQUEST).json({ message: 'Validation failed', errors });
+  } else if (error instanceof JsonWebTokenError) {
+    res.status(UNAUTHORIZED).json({ message: 'Invalid token' });
   } else {
-    res.status(INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' });
+    if (process.env.NODE_ENV === 'development') {
+      sendErrorToDev(error, res);
+    } else {
+      sendErrorToProd(error, res);
+    }
   }
+};
+
+const sendErrorToDev = (error: ErrorType, res: Response): void => {
+  res
+    .status(INTERNAL_SERVER_ERROR)
+    .json({ cause: 'Internal server error', message: error.message, stack: error.stack });
+};
+
+const sendErrorToProd = (error: ErrorType, res: Response): void => {
+  res.status(INTERNAL_SERVER_ERROR).json({ cause: 'Internal server error', message: error.message });
 };

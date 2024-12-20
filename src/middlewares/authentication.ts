@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
 import { ApiError, Jwt } from '../utils';
-import { JwtPayload } from 'jsonwebtoken';
 import { UNAUTHORIZED } from '../shared';
+import { IDecodedToken } from '../interfaces';
 
 export const isAuth = asyncHandler((req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1] as string;
@@ -11,12 +11,13 @@ export const isAuth = asyncHandler((req: Request, res: Response, next: NextFunct
     return next(new ApiError('Token is required', UNAUTHORIZED));
   }
 
-  const decodedToken = Jwt.verify(token);
+  const decodedToken = Jwt.verify(token) as IDecodedToken;
 
   if (!decodedToken) {
     return next(new ApiError('Invalid token', UNAUTHORIZED));
   }
 
-  res.locals.user = decodedToken as JwtPayload;
+  req.user = { uuid: decodedToken.payload };
+
   next();
 });
