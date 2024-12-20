@@ -48,6 +48,14 @@ module.exports = {
           match: true,
         },
       },
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        filter: {
+          regex: '^Request$',
+          match: true,
+        },
+      },
     ],
   },
 };
