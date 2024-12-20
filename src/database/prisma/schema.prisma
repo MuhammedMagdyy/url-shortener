@@ -22,8 +22,8 @@ model User {
 
 model Url {
   uuid      String   @id @default(uuid())
-  url       String
-  shortUrl  String   @unique @map("short_url")
+  url       String   @db.LongText
+  shortCode String   @unique @map("short_code")
   userUuid  String   @map("user_uuid")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -32,7 +32,7 @@ model Url {
   user  User    @relation(fields: [userUuid], references: [uuid])
 
   @@index([userUuid], name: "user_id")
-  @@index([shortUrl], name: "short_url")
+  @@index([shortCode], name: "short_code")
   @@map("urls")
 }
 

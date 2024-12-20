@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `urls` MODIFY `url` LONGTEXT NOT NULL;
