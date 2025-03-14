@@ -1,3 +1,3 @@
-export * from './errorHandler';
-export * from './authentication';
-export * from './rateLimit';
+export * from './errorHandler.middleware';
+export * from './isAuth.middleware';
+export * from './limiters.middleware';

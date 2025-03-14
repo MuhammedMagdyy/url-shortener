@@ -1,8 +1,12 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
-import { ZodError } from 'zod';
-import { ApiError } from '../utils';
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from '../shared';
 import { JsonWebTokenError } from 'jsonwebtoken';
+import { ZodError } from 'zod';
+import {
+  ApiError,
+  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
+  UNAUTHORIZED,
+} from '../utils';
 
 type ErrorType = ApiError | ZodError | JsonWebTokenError | Error;
 
@@ -34,11 +38,15 @@ export const errorHandler: ErrorRequestHandler = (
 };
 
 const sendErrorToDev = (error: ErrorType, res: Response): void => {
-  res
-    .status(INTERNAL_SERVER_ERROR)
-    .json({ cause: 'Internal server error', message: error.message, stack: error.stack });
+  res.status(INTERNAL_SERVER_ERROR).json({
+    cause: 'Internal server error',
+    message: error.message,
+    stack: error.stack,
+  });
 };
 
 const sendErrorToProd = (error: ErrorType, res: Response): void => {
-  res.status(INTERNAL_SERVER_ERROR).json({ cause: 'Internal server error', message: error.message });
+  res
+    .status(INTERNAL_SERVER_ERROR)
+    .json({ cause: 'Internal server error', message: error.message });
 };
