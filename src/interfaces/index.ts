@@ -1,11 +1,3 @@
-export interface IDecodedToken {
-  payload: string;
-  iat: number;
-  exp: number;
-}
-
-export interface IAxiosIpInfo {
-  city: string;
-  region: string;
-  country_name: string;
-}
+export * from './axios.interface';
+export * from './database.interface';
+export * from './jwt.interface';
