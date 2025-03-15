@@ -1,22 +1,23 @@
 import { Router } from 'express';
-import { userRouter } from './users';
-import { ApiError } from '../utils';
-import { NOT_FOUND, OK } from '../shared';
+import { OK } from '../utils';
 import { urlRouter } from './urls';
+import { userRouter } from './users';
 import { visitRouter } from './visits';
 
 const router = Router();
 
-router.get('/health', (_, res) => {
-  res.status(OK).json({ message: `I'm healthy 🤸‍♂️` });
+router.get('/health', (_req, res) => {
+  const uptime = process.uptime();
+
+  res.status(OK).json({
+    message: `I'm healthy 🏋️‍♂️`,
+    uptime: `${Math.floor(uptime / 60)} minutes`,
+    timestamp: new Date().toISOString(),
+  });
 });
 
 router.use('/auth', userRouter);
 router.use('/url', urlRouter);
 router.use('/analytics', visitRouter);
-
-router.all('*', (request, _res, next) => {
-  return next(new ApiError(`The route ${request.originalUrl} can't be found`, NOT_FOUND));
-});
 
 export default router;
