@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import prisma from '../../database/client';
+import { prismaClient } from '../../database';
 
 export class UrlRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -13,4 +13,4 @@ export class UrlRepository {
   }
 }
 
-export const urlRepository = new UrlRepository(prisma);
+export const urlRepository = new UrlRepository(prismaClient.getClient());

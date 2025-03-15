@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import prisma from '../../database/client';
+import { prismaClient } from '../../database';
 
 export class VistRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -21,9 +21,12 @@ export class VistRepository {
     return this.prisma.visit.findMany({ where: query, include: options });
   }
 
-  updateMany(query: Prisma.VisitWhereInput, data: Prisma.VisitUncheckedUpdateInput) {
+  updateMany(
+    query: Prisma.VisitWhereInput,
+    data: Prisma.VisitUncheckedUpdateInput,
+  ) {
     return this.prisma.visit.updateMany({ where: query, data });
   }
 }
 
-export const vistRepository = new VistRepository(prisma);
+export const vistRepository = new VistRepository(prismaClient.getClient());
