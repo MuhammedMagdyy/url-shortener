@@ -1,5 +1,5 @@
 export * from './ApiError';
-export * from './base62';
+export * from './helpers';
 export * from './Jwt';
 export * from './logger';
 export * from './Password';
