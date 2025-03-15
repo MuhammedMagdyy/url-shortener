@@ -1,4 +1,4 @@
-import { hash, compare } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 
 export class Password {
   static hash(password: string): Promise<string> {
