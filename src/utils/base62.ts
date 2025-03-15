@@ -1,4 +1,5 @@
-const BASE62_CHARSET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const BASE62_CHARSET =
+  '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 /**
  * Convert a hexadecimal string (UUID) to Base-62
