@@ -29,7 +29,7 @@ model Url {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   Visit Visit[]
-  user  User    @relation(fields: [userUuid], references: [uuid])
+  user  User    @relation(fields: [userUuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([userUuid], name: "user_id")
   @@index([shortCode], name: "short_code")
@@ -45,7 +45,7 @@ model Visit {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  url Url @relation(fields: [urlUuid], references: [uuid])
+  url Url @relation(fields: [urlUuid], references: [uuid], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([urlUuid], name: "url_id")
   @@map("visits")
