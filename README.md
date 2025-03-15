@@ -37,6 +37,7 @@ Sure, it might sound a little crazy (and okay, a bit like a digital detective), 
 - [ ] Enable Custom URL Patterns for personalized slugs.
 - [ ] Dockerize the Application.
 - [ ] API Documentation using Swagger.
+- [ ] Deploy the Application to a Cloud Platform.
 
 ## Schema
 ![schema](https://github.com/user-attachments/assets/c698bfa0-0503-4e03-ae43-774070ffecb2)
