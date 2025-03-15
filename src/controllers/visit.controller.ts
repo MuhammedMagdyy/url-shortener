@@ -1,17 +1,10 @@
 import asyncHandler from 'express-async-handler';
-import { urlService, vistService } from '../services';
-import { ApiError, NOT_FOUND, OK } from '../utils';
+import { vistService } from '../services';
+import { OK } from '../utils';
 
-export const analytics = asyncHandler(async (req, res, next) => {
+export const analytics = asyncHandler(async (req, res) => {
   const { code } = req.params;
-
-  const url = await urlService.findOne({ shortCode: code });
-
-  if (!url) {
-    return next(new ApiError('URL does not exists', NOT_FOUND));
-  }
-
-  const visits = await vistService.findMany({ urlUuid: url.uuid });
+  const visits = await vistService.getVisits(code);
 
   res.status(OK).json({ message: 'URL analytics', data: visits });
 });

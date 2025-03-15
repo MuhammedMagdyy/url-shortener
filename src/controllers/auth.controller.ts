@@ -1,32 +1,17 @@
 import asyncHandler from 'express-async-handler';
-import { userService } from '../services';
+import { IAuthBody } from '../interfaces';
+import { authService } from '../services';
 import {
-  ApiError,
-  CONFLICT,
   CREATED,
-  Jwt,
   loginSchema,
   OK,
-  Password,
   registerSchema,
   santizeUser,
-  UNAUTHORIZED,
 } from '../utils';
 
-export const register = asyncHandler(async (req, res, next) => {
-  const { username, password } = registerSchema.parse(req.body);
-  const isExists = await userService.findOne({ username });
-
-  if (isExists) {
-    return next(new ApiError('User already exists', CONFLICT));
-  }
-
-  const hashedPassword = await Password.hash(password);
-  const user = await userService.createOne({
-    username,
-    password: hashedPassword,
-  });
-  const token = Jwt.generate(user.uuid);
+export const register = asyncHandler(async (req, res) => {
+  const payload = registerSchema.parse(req.body) as IAuthBody;
+  const { user, token } = await authService.register(payload);
 
   res.status(CREATED).json({
     message: 'Registered successfully!',
@@ -35,21 +20,9 @@ export const register = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const login = asyncHandler(async (req, res, next) => {
-  const { username, password } = loginSchema.parse(req.body);
-  const user = await userService.findOne({ username });
-
-  if (!user) {
-    return next(new ApiError('Invalid username or password', UNAUTHORIZED));
-  }
-
-  const isMatch = await Password.isCorrect(password, user.password);
-
-  if (!isMatch) {
-    return next(new ApiError('Invalid username or password', UNAUTHORIZED));
-  }
-
-  const token = Jwt.generate(user.uuid);
+export const login = asyncHandler(async (req, res) => {
+  const payload = loginSchema.parse(req.body) as IAuthBody;
+  const token = await authService.login(payload);
 
   res.status(OK).json({ message: 'Logged in successfully!', token });
 });
