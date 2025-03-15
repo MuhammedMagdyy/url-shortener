@@ -1,7 +1,7 @@
-import app from './app';
+import * as app from './app';
+import { logger } from './utils';
 
-const PORT = process.env.PORT ?? 8080;
-
-app.listen(PORT, () => {
-  console.info(`Server is running on port ${PORT}`);
+app.up().catch((error) => {
+  logger.error(`Error occurred while starting the server - ${error} ❌`);
+  process.exit(1);
 });

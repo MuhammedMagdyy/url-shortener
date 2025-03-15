@@ -1,7 +1,17 @@
 import asyncHandler from 'express-async-handler';
-import { userService } from '../../services';
-import { ApiError, Jwt, Password, registerSchema, loginSchema, santizeUser } from '../../utils';
-import { CONFLICT, CREATED, OK, UNAUTHORIZED } from '../../shared';
+import { userService } from '../services';
+import {
+  ApiError,
+  CONFLICT,
+  CREATED,
+  Jwt,
+  loginSchema,
+  OK,
+  Password,
+  registerSchema,
+  santizeUser,
+  UNAUTHORIZED,
+} from '../utils';
 
 export const register = asyncHandler(async (req, res, next) => {
   const { username, password } = registerSchema.parse(req.body);
@@ -12,10 +22,17 @@ export const register = asyncHandler(async (req, res, next) => {
   }
 
   const hashedPassword = await Password.hash(password);
-  const user = await userService.createOne({ username, password: hashedPassword });
+  const user = await userService.createOne({
+    username,
+    password: hashedPassword,
+  });
   const token = Jwt.generate(user.uuid);
 
-  res.status(CREATED).json({ message: 'Registered successfully!', data: santizeUser(user), token });
+  res.status(CREATED).json({
+    message: 'Registered successfully!',
+    data: santizeUser(user),
+    token,
+  });
 });
 
 export const login = asyncHandler(async (req, res, next) => {

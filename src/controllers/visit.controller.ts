@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import { urlService, vistService } from '../../services';
-import { ApiError } from '../../utils';
-import { NOT_FOUND, OK } from '../../shared';
+import { urlService, vistService } from '../services';
+import { ApiError, NOT_FOUND, OK } from '../utils';
 
 export const analytics = asyncHandler(async (req, res, next) => {
   const { code } = req.params;

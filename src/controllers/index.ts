@@ -1,3 +1,3 @@
-export * as users from './Users';
-export * as urls from './Urls';
-export * as visits from './Visits';
+export * as users from './auth.controller';
+export * as urls from './url.controller';
+export * as visits from './visit.controller';
