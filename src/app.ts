@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import { PrismaDatabaseClient } from './database';
 import { errorHandler } from './middlewares';
 import routes from './routes';
-import { ApiError, logger, NOT_FOUND } from './utils';
+import { ApiError, INTERNAL_SERVER_ERROR, logger, NOT_FOUND } from './utils';
 
 const app = express();
 const prismaClient = PrismaDatabaseClient.getInstance();
@@ -20,9 +20,11 @@ app.get('/', (_, res) => {
 
 app.set('trust proxy', 1);
 app.use(
-  morgan('combined', {
-    stream: { write: (message) => logger.http(message.trim()) },
-  }),
+  process.env.NODE_ENV === 'development'
+    ? morgan('dev')
+    : morgan('combined', {
+        skip: (_, res) => res.statusCode < INTERNAL_SERVER_ERROR,
+      }),
 );
 app.use(helmet());
 app.use(cors());
