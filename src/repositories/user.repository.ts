@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { prismaClient } from '../../database';
+import { prismaClient } from '../database';
 
 export class UserRepository {
   constructor(private readonly prisma: PrismaClient) {}

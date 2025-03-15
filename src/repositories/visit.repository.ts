@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { prismaClient } from '../../database';
+import { prismaClient } from '../database';
 
 export class VistRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -12,13 +12,8 @@ export class VistRepository {
     return this.prisma.visit.findFirst({ where: query });
   }
 
-  findMany(
-    query: Prisma.VisitWhereInput,
-    options: Prisma.VisitFindManyArgs['include'] = {
-      url: true,
-    },
-  ) {
-    return this.prisma.visit.findMany({ where: query, include: options });
+  findMany(query: Prisma.VisitWhereInput) {
+    return this.prisma.visit.findMany({ where: query });
   }
 
   updateMany(
