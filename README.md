@@ -1,12 +1,13 @@
 # URL Shortener (aka. Tiny URL)
 
-![Node.js](https://img.shields.io/badge/Node.js-green?logo=node.js&style=flat)
-![Express](https://img.shields.io/badge/Express-lightgrey?logo=express&style=flat)
-![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&style=flat)
-![Docker](https://img.shields.io/badge/Docker-blue?logo=docker&style=flat)
+![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)
 ![Ngrok](https://img.shields.io/badge/ngrok-black?logo=ngrok&style=flat)
-![MySQL](https://img.shields.io/badge/MySQL-red?logo=mysql&style=flat)
-![Prisma](https://img.shields.io/badge/Prisma-blueviolet?logo=prisma&style=flat)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white)
 
 ## Table of Contents
 - [Introduction](#introduction)
